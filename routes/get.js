@@ -1,4 +1,7 @@
-const conexion = require("./conexion");
+const conectores = require('./conexion');
+const conexion = conectores.mongo;
+const redis = conectores.redis();
+const { Types } = require('mongoose');
 
 const getAdministrativos = (req, res) => {
   conexion().then(() => {
