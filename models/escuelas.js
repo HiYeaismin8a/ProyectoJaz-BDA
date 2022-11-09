@@ -3,14 +3,14 @@ const { Schema, model } = require("mongoose");
 const esquema = new Schema(
   {
     _id: Schema.Types.ObjectId,
-    administrativos: [Schema.Types.ObjectId],
-    alumnos: [Schema.Types.ObjectId],
-    cd: String,
     clave: String,
+    nombre: String,
+    cd: String,
     direccion: String,
+    administrativos: [Schema.Types.ObjectId],
     docentes: [Schema.Types.ObjectId],
     mantenimiento: [Schema.Types.ObjectId],
-    nombre: String,
+    alumnos: [Schema.Types.ObjectId]
   },
   {
     collection: "escuelas"

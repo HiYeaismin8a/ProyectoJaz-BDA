@@ -8,23 +8,23 @@ const postAdministrativos = (req, res) => {
     const modelo = require("../models/administrativos");
     const administrativo = new modelo({
       _id: Types.ObjectId(req.body._id),
-      mail: req.body.mail,
-      noBancaria: req.body.noBancaria,
-      curp: req.body.curp,
-      escuela: Types.ObjectId(req.body.escuela),
-      extTel: req.body.extTel,
       funcion: req.body.funcion,
       hrEntrada: req.body.hrEntrada,
       hrSalida: req.body.hrSalida,
+      extTel: req.body.extTel,
+      mail: req.body.mail,
+      curp: req.body.curp,
       nombre: req.body.nombre,
-      tel: req.body.tel,
+      tel: req.body.noBancaria,
+      noBancaria: req.body.noBancaria,
+      escuela: Types.ObjectId(req.body.escuela),
     });
     administrativo
       .save()
       .then((administrativo) => {
         redis.connect().then(() => {
           redis.set(
-            `ADMINISTRATIVOS:POST:${new Date().getTime().toString()}`,
+            `ADMINISTRATIVOS:POST:${new Date().toUTCString()}`,
             `Registro de administrativo ${administrativo._id}`
           );
           redis.quit();
@@ -34,7 +34,7 @@ const postAdministrativos = (req, res) => {
       .catch((err) => {
         redis.connect().then(() => {
           redis.set(
-            `ADMINISTRATIVOS:POST:${new Date().getTime().toString()}`,
+            `ADMINISTRATIVOS:POST:${new Date().toUTCString()}`,
             err.message
           );
           redis.quit();
@@ -48,25 +48,21 @@ const postAlumnos = (req, res) => {
     const modelo = require("../models/alumnos");
     const alumnos = new modelo({
       _id: Types.ObjectId(req.body._id),
-      areaEspecialidad: req.body.areaEspecialidad,
-      creditoTutoria_Firmada: req.body.creditoTutoria_Firmada,
       curp: req.body.curp,
-      escuela: Types.ObjectId(req.body.escuela),
-      fechaIncripcion: req.body.fechaIncripcion,
-      fechaNac: req.body.fechaIncripcion,
-      gradoAcademico: req.body.gradoAcademico,
-      noBancaria: req.body.noBancaria,
-      noOficina: req.body.noOficina,
       nombre: req.body.nombre,
-      tel: req.body.tel,
+      fechaNac: req.body.fechaIncripcion,
+      fechaIncripcion: req.body.fechaIncripcion,
+      gradoAcademico: req.body.gradoAcademico,
+      creditoTutoria_Firmada: req.body.creditoTutoria_Firmada,
       tutor: Types.ObjectId(req.body.tutor),
+      escuela: Types.ObjectId(req.body.escuela),
     });
     alumnos
       .save()
       .then((alumnos) => {
         redis.connect().then(() => {
           redis.set(
-            `Alumnos:POST:${new Date().getTime().toString()}`,
+            `Alumnos:POST:${new Date().toUTCString()}`,
             `Registro de alumnos ${alumnos._id}`
           );
           redis.quit();
@@ -76,7 +72,7 @@ const postAlumnos = (req, res) => {
       .catch((err) => {
         redis.connect().then(() => {
           redis.set(
-            `alumnos:POST:${new Date().getTime().toString()}`,
+            `alumnos:POST:${new Date().toUTCString()}`,
             err.message
           );
           redis.quit();
@@ -90,19 +86,23 @@ const postDocentes = (req, res) => {
     const modelo = require("../models/docente");
     const docentes = new modelo({
       _id: Types.ObjectId(req.body._id),
+      noOficina: req.body.noOficina,
       areaEspecialidad: req.body.areaEspecialidad,
       curp: req.body.curp,
-      noBancaria: req.body.noBancaria,
-      noTelIns: req.body.noTelIns,
       nombre: req.body.nombre,
       tel: req.body.tel,
+      noBancaria: req.body.noBancaria,
+      gradoEstudio: req.body.gradoEstudio,
+      tutorados: req.body.tutorados,
+      tutoriaFirmada: req.body.tutoriaFirmada,
+      escuela: Types.ObjectId(req.body.escuela)
     });
     docentes
       .save()
       .then((docentes) => {
         redis.connect().then(() => {
           redis.set(
-            `Docentes:POST:${new Date().getTime().toString()}`,
+            `Docentes:POST:${new Date().toUTCString()}`,
             `Registro de docentes ${docentes._id}`
           );
           redis.quit();
@@ -112,7 +112,7 @@ const postDocentes = (req, res) => {
       .catch((err) => {
         redis.connect().then(() => {
           redis.set(
-            `Docentes:POST:${new Date().getTime().toString()}`,
+            `Docentes:POST:${new Date().toUTCString()}`,
             err.message
           );
           redis.quit();
@@ -126,17 +126,21 @@ const postEscuela = (req, res) => {
     const modelo = require("../models/escuelas");
     const escuela = new modelo({
       _id: Types.ObjectId(req.body._id),
-      cd: req.body.cd,
       clave: req.body.clave,
-      direccion: req.body.direccion,
       nombre: req.body.nombre,
+      cd: req.body.cd,
+      direccion: req.body.direccion,
+      administrativos: req.body.administrativo,
+      docentes: req.body.docentes,
+      mantenimiento: req.body.mantenimiento,
+      alumnos: req.body.alumnos
     });
     escuela
       .save()
       .then((escuela) => {
         redis.connect().then(() => {
           redis.set(
-            `Escuela:POST:${new Date().getTime().toString()}`,
+            `Escuela:POST:${new Date().toUTCString()}`,
             `Registro de escuela ${escuela._id}`
           );
           redis.quit();
@@ -146,7 +150,7 @@ const postEscuela = (req, res) => {
       .catch((err) => {
         redis.connect().then(() => {
           redis.set(
-            `Escuela:POST:${new Date().getTime().toString()}`,
+            `Escuela:POST:${new Date().toUTCString()}`,
             err.message
           );
           redis.quit();
@@ -162,18 +166,17 @@ const postMantenimiento = (req, res) => {
       _id: Types.ObjectId(req.body._id),
       areaEspecialidad: req.body.areaEspecialidad,
       curp: req.body.curp,
-      escuela: Types.ObjectId(req.body.escuela),
-      noBancaria: req.body.noBancaria,
-      noTelIns: req.body.noTelIns,
       nombre: req.body.nombre,
       tel: req.body.tel,
+      escuela: Types.ObjectId(req.body.escuela),
+      noBancaria: req.body.noBancaria
     });
     mantenimiento
       .save()
       .then((mantenimiento) => {
         redis.connect().then(() => {
           redis.set(
-            `mantenimiento:POST:${new Date().getTime().toString()}`,
+            `mantenimiento:POST:${new Date().toUTCString()}`,
             `Registro de mantenimiento ${mantenimiento._id}`
           );
           redis.quit();
@@ -183,7 +186,7 @@ const postMantenimiento = (req, res) => {
       .catch((err) => {
         redis.connect().then(() => {
           redis.set(
-            `Mantenimiento:POST:${new Date().getTime().toString()}`,
+            `Mantenimiento:POST:${new Date().toUTCString()}`,
             err.message
           );
           redis.quit();

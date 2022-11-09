@@ -1,17 +1,17 @@
 const { Schema, model } = require("mongoose");
 
 const esquema = new Schema({
-    _id: Schema.Types.ObjectId,
-    curp: String,
-    escuela: Schema.Types.ObjectId,
-    extTel: String,
+    _id: Schema.Types.ObjectId, 
     funcion: String,
     hrEntrada: String,
     hrSalida: String,
+    extTel: String,
     mail: String,
-    noBancaria: String,
+    curp: String,
     nombre: String,
     tel: String,
+    escuela: Schema.Types.ObjectId,
+    noBancaria: String,
 },
 {
     collection:"administrativos"

@@ -4,11 +4,10 @@ const esquema = new Schema({
     _id: Schema.Types.ObjectId,
     areaEspecialidad: String,
     curp: String,
-    escuela: Schema.Types.ObjectId,
-    noBancaria: String,
-    noTelIns: String,
     nombre: String,
-    tel: String
+    tel: String,
+    noBancaria: String,
+    escuela: Schema.Types.ObjectId,
 },
 {
     collection: "mantenimiento"

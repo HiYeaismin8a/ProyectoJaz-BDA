@@ -1,7 +1,7 @@
-const conectores = require('./conexion');
+const conectores = require("./conexion");
 const conexion = conectores.mongo;
 const redis = conectores.redis();
-const { Types } = require('mongoose');
+const { Types } = require("mongoose");
 
 const getAdministrativos = (req, res) => {
   conexion().then(() => {
@@ -9,8 +9,16 @@ const getAdministrativos = (req, res) => {
     administrativos
       .find()
       .then((dataAdminist) => {
-        res.json(dataAdminist);
+        redis.connect().then(() => {
+          redis.set(
+            `ADMINISTRATIVOS:GET:${new Date().toUTCString()}`,
+            `consulta de administrativos`
+          );
+          redis.quit();
+        });
+        res.header("Access-Control-Allow-Origin", "*").json(dataAdminist);
       })
+
       .catch((error) => {
         console.log(error);
       });
@@ -23,7 +31,14 @@ const getAdministrativo = (req, res) => {
     administrativos
       .findById(req.params.id)
       .then((dataAdminist) => {
-        res.json(dataAdminist);
+        redis.connect().then(() => {
+          redis.set(
+            `ADMINISTRATIVOS:GET:${new Date().toUTCString()}`,
+            `Obtener de administrativos ${req.params.id}`
+          );
+          redis.quit();
+        });
+        res.header("Access-Control-Allow-Origin", "*").json(dataAdminist);
       })
       .catch((error) => {
         console.log(error);
@@ -37,26 +52,41 @@ const getAlumnos = (req, res) => {
     alumnos
       .find()
       .then((dataAlumns) => {
-        res.json(dataAlumns);
+        redis.connect().then(() => {
+          redis.set(
+            `Alumnos:GET:${new Date().toUTCString()}`,
+            `consulta de alumnos`
+          );
+          redis.quit();
+        });
+        res.header("Access-Control-Allow-Origin", "*").json(dataAlumns);
       })
       .catch((error) => {
         console.log(error);
       });
   });
 };
+
 const getAlumno = (req, res) => {
-    conexion().then(() => {
-      const alumnos = require("../models/alumnos");
-      alumnos
-        .findById(req.params.id)
-        .then((dataAlumns) => {
-          res.json(dataAlumns);
-        })
-        .catch((error) => {
-          console.log(error);
+  conexion().then(() => {
+    const alumnos = require("../models/alumnos");
+    alumnos
+      .findById(req.params.id)
+      .then((dataAlumns) => {
+        redis.connect().then(() => {
+          redis.set(
+            `Alumnos:GET:${new Date().toUTCString()}`,
+            `Obtener de alumnos ${req.params.id}`
+          );
+          redis.quit();
         });
-    });
-  };
+        res.header("Access-Control-Allow-Origin", "*").json(dataAlumns);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+};
 
 const getDocentes = (req, res) => {
   conexion().then(() => {
@@ -64,7 +94,14 @@ const getDocentes = (req, res) => {
     docentes
       .find()
       .then((dataDocents) => {
-        res.json(dataDocents);
+        redis.connect().then(() => {
+          redis.set(
+            `Docentes:GET:${new Date().toUTCString()}`,
+            `consulta de docentes`
+          );
+          redis.quit();
+        });
+        res.header("Access-Control-Allow-Origin", "*").json(dataDocents);
       })
       .catch((error) => {
         console.log(error);
@@ -72,18 +109,25 @@ const getDocentes = (req, res) => {
   });
 };
 const getDocente = (req, res) => {
-    conexion().then(() => {
-      const docentes = require("../models/docente");
-      docentes
-        .findById(req.params.id)
-        .then((dataDocents) => {
-          res.json(dataDocents);
-        })
-        .catch((error) => {
-          console.log(error);
+  conexion().then(() => {
+    const docentes = require("../models/docente");
+    docentes
+      .findById(req.params.id)
+      .then((dataDocents) => {
+        redis.connect().then(() => {
+          redis.set(
+            `Docentes:GET:${new Date().toUTCString()}`,
+            `OBTENER de docentes ${req.params.id}`
+          );
+          redis.quit();
         });
-    });
-  };
+        res.header("Access-Control-Allow-Origin", "*").json(dataDocents);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+};
 
 const getEscuelas = (req, res) => {
   conexion().then(() => {
@@ -91,7 +135,14 @@ const getEscuelas = (req, res) => {
     escuelas
       .find()
       .then((dataEscuelas) => {
-        res.json(dataEscuelas);
+        redis.connect().then(() => {
+          redis.set(
+            `Escuela:GET:${new Date().toUTCString()}`,
+            `consulta de escuelas`
+          );
+          redis.quit();
+        });
+        res.header("Access-Control-Allow-Origin", "*").json(dataEscuelas);
       })
       .catch((error) => {
         console.log(error);
@@ -99,18 +150,25 @@ const getEscuelas = (req, res) => {
   });
 };
 const getEscuela = (req, res) => {
-    conexion().then(() => {
-      const escuelas = require("../models/escuelas");
-      escuelas
-        .findById(req.params.id)
-        .then((dataEscuelas) => {
-          res.json(dataEscuelas);
-        })
-        .catch((error) => {
-          console.log(error);
+  conexion().then(() => {
+    const escuelas = require("../models/escuelas");
+    escuelas
+      .findById(req.params.id)
+      .then((dataEscuelas) => {
+        redis.connect().then(() => {
+          redis.set(
+            `Escuela:GET:${new Date().toUTCString()}`,
+            `OBTENER de escuela ${req.params.id}`
+          );
+          redis.quit();
         });
-    });
-  };
+        res.header("Access-Control-Allow-Origin", "*").json(dataEscuelas);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+};
 
 const getMantenimiento = (req, res) => {
   conexion().then(() => {
@@ -118,7 +176,14 @@ const getMantenimiento = (req, res) => {
     mantenimiento
       .find()
       .then((dataMantenimiento) => {
-        res.json(dataMantenimiento);
+        redis.connect().then(() => {
+          redis.set(
+            `mantenimiento:GET:${new Date().toUTCString()}`,
+            `consulta de mantenimientos`
+          );
+          redis.quit();
+        });
+        res.header("Access-Control-Allow-Origin", "*").json(dataMantenimiento);
       })
       .catch((error) => {
         console.log(error);
@@ -131,7 +196,14 @@ const getMantenimientoo = (req, res) => {
     mantenimiento
       .findById(req.params.id)
       .then((dataMantenimiento) => {
-        res.json(dataMantenimiento);
+        redis.connect().then(() => {
+          redis.set(
+            `mantenimiento:GET:${new Date().toUTCString()}`,
+            `Registro de mantenimiento ${req.params.id}`
+          );
+          redis.quit();
+        });
+        res.header("Access-Control-Allow-Origin", "*").json(dataMantenimiento);
       })
       .catch((error) => {
         console.log(error);

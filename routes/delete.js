@@ -9,7 +9,7 @@ const deleteAdministrativo = (req, res) => {
       modelo.deleteOne({ _id: req.params.id }).then((administrativo) => {
         redis.connect().then(() => {
           redis.set(
-            `ADMINISTRATIVOS:DELETE:${new Date().getTime().toString()}`,
+            `ADMINISTRATIVOS:DELETE:${new Date().toUTCString()}`,
             `Eliminacion de administrativo ${JSON.stringify(administrativo)}`
           );
           redis.quit();
@@ -25,7 +25,7 @@ const deleteAdministrativo = (req, res) => {
       modelo.deleteOne({ _id: req.params.id }).then((alumnos) => {
         redis.connect().then(() => {
           redis.set(
-            `Alumnos:DELETE:${new Date().getTime().toString()}`,
+            `Alumnos:DELETE:${new Date().toUTCString()}`,
             `Eliminacion de administrativo ${JSON.stringify(alumnos)}`
           );
           redis.quit();
@@ -41,7 +41,7 @@ const deleteAdministrativo = (req, res) => {
       modelo.deleteOne({ _id: req.params.id }).then((docente) => {
         redis.connect().then(() => {
           redis.set(
-            `Docente:DELETE:${new Date().getTime().toString()}`,
+            `Docente:DELETE:${new Date().toUTCString()}`,
             `Eliminacion de docente ${JSON.stringify(docente)}`
           );
           redis.quit();
@@ -57,7 +57,7 @@ const deleteAdministrativo = (req, res) => {
       modelo.deleteOne({ _id: req.params.id }).then((escuelas) => {
         redis.connect().then(() => {
           redis.set(
-            `Escuelas:DELETE:${new Date().getTime().toString()}`,
+            `Escuelas:DELETE:${new Date().toUTCString()}`,
             `Eliminacion de escuelas ${JSON.stringify(escuelas)}`
           );
           redis.quit();
@@ -73,7 +73,7 @@ const deleteAdministrativo = (req, res) => {
       modelo.deleteOne({ _id: req.params.id }).then((mantenimiento) => {
         redis.connect().then(() => {
           redis.set(
-            `Mantenimiento:DELETE:${new Date().getTime().toString()}`,
+            `Mantenimiento:DELETE:${new Date().toUTCString()}`,
             `Eliminacion de Mantenimiento ${JSON.stringify(mantenimiento)}`
           );
           redis.quit();

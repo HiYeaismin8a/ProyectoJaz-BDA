@@ -11,7 +11,7 @@ const putAdministrativo = (req, res) => {
         .then((administrativo) => {
           redis.connect().then(() => {
             redis.set(
-              `ADMINISTRATIVOS:PUT:${new Date().getTime().toString()}`,
+              `ADMINISTRATIVOS:PUT:${new Date().toUTCString()}`,
               `Actualizacion de administrativo ${administrativo._id}`
             );
             redis.quit();
@@ -29,7 +29,7 @@ const putAdministrativo = (req, res) => {
         .then((alumno) => {
           redis.connect().then(() => {
             redis.set(
-              `alumno:PUT:${new Date().getTime().toString()}`,
+              `alumno:PUT:${new Date().toUTCString()}`,
               `Actualizacion de alumno ${alumno._id}`
             );
             redis.quit();
@@ -47,7 +47,7 @@ const putAdministrativo = (req, res) => {
         .then((docente) => {
           redis.connect().then(() => {
             redis.set(
-              `docente:PUT:${new Date().getTime().toString()}`,
+              `docente:PUT:${new Date().toUTCString()}`,
               `Actualizacion de docente ${docente._id}`
             );
             redis.quit();
@@ -65,7 +65,7 @@ const putAdministrativo = (req, res) => {
         .then((escuelas) => {
           redis.connect().then(() => {
             redis.set(
-              `escuelas:PUT:${new Date().getTime().toString()}`,
+              `escuelas:PUT:${new Date().toUTCString()}`,
               `Actualizacion de escuelas ${escuelas._id}`
             );
             redis.quit();
@@ -83,7 +83,7 @@ const putAdministrativo = (req, res) => {
         .then((mantenimiento) => {
           redis.connect().then(() => {
             redis.set(
-              `mantenimiento:PUT:${new Date().getTime().toString()}`,
+              `mantenimiento:PUT:${new Date().toUTCString()}`,
               `Actualizacion de mantenimiento ${mantenimiento._id}`
             );
             redis.quit();

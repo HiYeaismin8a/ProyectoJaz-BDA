@@ -2,18 +2,15 @@ const { Schema, model } = require("mongoose");
 
 const esquema = new Schema({
     _id: Schema.Types.ObjectId,
+    curp: String,
+    nombre: String,
+    fechaNac: String,
+    fechaIncripcion: String,
+    gradoAcademico: String,
     areaEspecialidad: String,
     creditoTutoria_Firmada: Boolean,
-    curp: String,
+    tutor: Schema.Types.ObjectId,
     escuela: Schema.Types.ObjectId,
-    fechaIncripcion: String,
-    fechaNac: String,
-    gradoAcademico: String,
-    noBancaria: String,
-    noOficina: String,
-    nombre: String,
-    tel: String,
-    tutor: Schema.Types.ObjectId
 },
 {
     colletion: "alumnos"
