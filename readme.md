@@ -1,6 +1,7 @@
 # **JAZMIN OCHOA BENITEZ**
 # Gestión Escolar - BDA
 # RUTAS
+[`COLECCION EN POSTMAN`](https://www.getpostman.com/collections/304b6dfd9b5fb5f971a6)
 
 
 ### GET
